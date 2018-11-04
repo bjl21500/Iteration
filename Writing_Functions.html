@@ -128,7 +128,43 @@ $(document).ready(function () {
 </div>
 
 
+<pre class="r"><code>x = rnorm(25, mean = 5, sd = 3)
 
+(x - mean(x)) / sd(x)</code></pre>
+<pre><code>##  [1] -0.83687228  0.01576465 -1.05703126  1.50152998  0.16928872
+##  [6] -1.04107494  0.33550276  0.59957343  0.42849461 -0.49894708
+## [11]  1.41364561  0.23279252 -0.83138529 -2.50852027  1.00648110
+## [16] -0.22481531 -0.19456260  0.81587675  0.68682298  0.44756609
+## [21]  0.78971253  0.64568566 -0.09904161 -2.27133861  0.47485186</code></pre>
+<pre class="r"><code>z_scores = function(x) {
+  
+  z = (x - mean(x)) / sd(x)
+  z
+  
+}
+
+z_scores(x)</code></pre>
+<pre><code>##  [1] -0.83687228  0.01576465 -1.05703126  1.50152998  0.16928872
+##  [6] -1.04107494  0.33550276  0.59957343  0.42849461 -0.49894708
+## [11]  1.41364561  0.23279252 -0.83138529 -2.50852027  1.00648110
+## [16] -0.22481531 -0.19456260  0.81587675  0.68682298  0.44756609
+## [21]  0.78971253  0.64568566 -0.09904161 -2.27133861  0.47485186</code></pre>
+<p>z_scores(3)</p>
+<p>z_scores(“my name is jeff”)</p>
+<p>z_scores(iris)</p>
+<p>z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE)) ```</p>
+<pre class="r"><code>z_scores = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop(&quot;Argument x should be numeric&quot;)
+  } else if (length(x) == 1) {
+    stop(&quot;Z scores cannot be computed for length 1 vectors&quot;)
+  }
+  
+  z = mean(x) / sd(x)
+  
+  z
+}</code></pre>
 
 
 

@@ -14,6 +14,47 @@ library(rvest)
 set.seed(1)
 ```
 
+```{r}
+x = rnorm(25, mean = 5, sd = 3)
+
+(x - mean(x)) / sd(x)
+
+z_scores = function(x) {
+  
+  z = (x - mean(x)) / sd(x)
+  z
+  
+}
+
+z_scores(x)
+```
+
+
+z_scores(3)
+
+z_scores("my name is jeff")
+
+z_scores(iris)
+
+z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE))
+```
+
+```{r}
+z_scores = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Z scores cannot be computed for length 1 vectors")
+  }
+  
+  z = mean(x) / sd(x)
+  
+  z
+}
+
+```
+
 
 
 
