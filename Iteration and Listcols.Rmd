@@ -15,4 +15,107 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(rvest)
 theme_set(theme_bw() + theme(legend.position = "bottom"))
+
+set.seed(1)
+```
+
+
+## Lists
+
+```{r}
+l = list(vec_numeric = 5:8,
+         mat         = matrix(1:8, 2, 4),
+         vec_logical = c(TRUE, FALSE),
+         summary     = summary(rnorm(1000)))
+
+l
+# A list is some arbitrary collection for information. 
+# I can put whatever I want in a list.
+
+# I can access the elements of this list by putting the '$' notation:
+
+l$vec_numeric
+# Double brackets can be use to eextrace either 1st, 1nd, or 3rd element:
+l[[1]]
+
+l[[2]]
+
+l[[3]]
+```
+
+## for loops
+
+```{r}
+
+df = data_frame(
+  a = rnorm(20, 3, 1),
+  b = rnorm(20, 0, 5),
+  c = rnorm(20, 10, .2),
+  d = rnorm(20, -3, 1)
+)
+
+is.list(df)
+# Above code is asking "is this a list?"
+
+df[[1]]
+# Will give me that 1st vetor
+
+df[[2]]
+# Will give me that 2nd vector
+```
+
+Let me get a function
+
+```{r}
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Cannot be computed for length 1 vectors")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+
+  tibble(
+    mean = mean_x, 
+    sd = sd_x
+  )
+}
+```
+
+
+I can apply to my dataframe.
+
+```{r}
+ mean_and_sd(df[[1]])
+# This should use mean and std on 1st column in my dataframe or, equivalently, 1st list element in this object
+
+# Can repeat for the other list elements
+mean_and_sd(df[[2]])
+mean_and_sd(df[[3]])
+mean_and_sd(df[[4]])
+
+# This makes the code chunk lookt a bit chunky, so this is a problem. Need a cleaner way
+```
+
+
+Write a for loop
+
+```{r}
+output = vector("list", length = 4)
+
+# The '4' is the same length as my input object, my input object is a list of length '4', "I have 4 columns in my dataframe"
+
+output[[1]] = mean_and_sd(df[[1]])
+output[[2]] = mean_and_sd(df[[2]])
+output[[3]] = mean_and_sd(df[[3]])
+output[[4]] = mean_and_sd(df[[4]])
+
+for (i in 1:4) {
+  
+  output[[i]] = mean_and_sd(df[[i]])
+}
+# now function is being applied to every element in the list
 ```
