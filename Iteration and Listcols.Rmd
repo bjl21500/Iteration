@@ -1,0 +1,18 @@
+---
+title: "Iteration and Listcols"
+author: "Briana Lettsome"
+date: "November 4, 2018"
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+library(tidyverse)
+library(rvest)
+theme_set(theme_bw() + theme(legend.position = "bottom"))
+```
