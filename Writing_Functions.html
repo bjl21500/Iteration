@@ -175,6 +175,77 @@ ls_fit = lm(y ~ x, data = sim_data)
   
 beta0_hat = coef(ls_fit)[1]
 beta1_hat = coef(ls_fit)[2]</code></pre>
+<pre class="r"><code>sim_regression = function(n, beta0 = 2, beta1 = 3) {
+  
+  sim_data = tibble(
+    x = rnorm(n, mean = 1, sd = 1),
+    y = beta0 + beta1 * x + rnorm(n, 0, 1)
+  )
+  
+  ls_fit = lm(y ~ x, data = sim_data)
+  
+  tibble(
+    beta0_hat = coef(ls_fit)[1],
+    beta1_hat = coef(ls_fit)[2]
+  )
+}</code></pre>
+<pre class="r"><code>url = &quot;https://www.amazon.com/product-reviews/B00005JNBQ/ref=cm_cr_arp_d_viewopt_rvwer?ie=UTF8&amp;reviewerType=avp_only_reviews&amp;sortBy=recent&amp;pageNumber=1&quot;
+
+dynamite_html = read_html(url)
+
+review_titles = dynamite_html %&gt;%
+  html_nodes(&quot;#cm_cr-review_list .review-title&quot;) %&gt;%
+  html_text()
+
+review_stars = dynamite_html %&gt;%
+  html_nodes(&quot;#cm_cr-review_list .review-rating&quot;) %&gt;%
+  html_text()
+
+review_text = dynamite_html %&gt;%
+    html_nodes(&quot;.review-data:nth-child(4)&quot;) %&gt;%
+    html_text()
+
+reviews = tibble(
+  title = review_titles,
+  stars = review_stars,
+  text = review_text
+)</code></pre>
+<pre class="r"><code>extract_reviews = function(url) {
+  dynamite_html = read_html(url)
+  review_titles = dynamite_html %&gt;%
+    html_nodes(&quot;#cm_cr-review_list .review-title&quot;) %&gt;%
+    html_text()
+  review_stars = dynamite_html %&gt;%
+    html_nodes(&quot;#cm_cr-review_list .review-rating&quot;) %&gt;%
+    html_text()
+  
+  review_text = dynamite_html %&gt;%
+    html_nodes(&quot;.review-data:nth-child(4)&quot;) %&gt;%
+    html_text()
+  
+  reviews = tibble(
+    title = review_titles,
+    stars = review_stars,
+    text = review_text
+  )
+  
+  reviews
+}
+url = &quot;https://www.amazon.com/product-reviews/B00005JNBQ/ref=cm_cr_arp_d_viewopt_rvwer?ie=UTF8&amp;reviewerType=avp_only_reviews&amp;sortBy=recent&amp;pageNumber=1&quot;
+extract_reviews(url)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    title                             stars         text                   
+##    &lt;chr&gt;                             &lt;chr&gt;         &lt;chr&gt;                  
+##  1 Pedro for President               5.0 out of 5~ Format: Prime VideoVer~
+##  2 &quot;\U0001f64f\U0001f3fb&quot;            5.0 out of 5~ Format: DVDVerified Pu~
+##  3 Great Movie                       5.0 out of 5~ Format: Prime VideoVer~
+##  4 True to life!                     5.0 out of 5~ Format: Prime VideoVer~
+##  5 Classic family friendly comedy k~ 5.0 out of 5~ Format: Prime VideoVer~
+##  6 &quot;Great \&quot;Odd Ball\&quot; movie to wat~ 5.0 out of 5~ Format: Prime VideoVer~
+##  7 Nostalgic Stupidity               4.0 out of 5~ Format: Prime VideoVer~
+##  8 Happy                             5.0 out of 5~ Format: DVDVerified Pu~
+##  9 Go watch THE ROCK or dumb &amp; dumb~ 2.0 out of 5~ Format: Prime VideoVer~
+## 10 My mom loves it                   5.0 out of 5~ Format: Blu-rayVerifie~</code></pre>
 
 
 
