@@ -3,6 +3,9 @@ Iteration and Listcols
 Briana Lettsome
 November 4, 2018
 
+Lecture Octuber30th
+===================
+
 Lists
 -----
 
@@ -145,4 +148,68 @@ for (i in 1:4) {
   output[[i]] = mean_and_sd(df[[i]])
 }
 # now function is being applied to every element in the list
+```
+
+Map statements
+--------------
+
+Using map to replace the 'for' loop with 'map
+
+``` r
+output = map(df, mean_and_sd)
+# df will be treated as a list
+```
+
+``` r
+df %>%
+  select(a, b, c) %>%
+  map(mean_and_sd)
+## $a
+## # A tibble: 1 x 2
+##    mean    sd
+##   <dbl> <dbl>
+## 1  2.70  1.12
+## 
+## $b
+## # A tibble: 1 x 2
+##    mean    sd
+##   <dbl> <dbl>
+## 1 0.416  4.08
+## 
+## $c
+## # A tibble: 1 x 2
+##    mean    sd
+##   <dbl> <dbl>
+## 1  10.1 0.191
+# Applying map function to selelct columns
+```
+
+Let's me try a different function
+
+``` r
+output = map(df, median)
+
+# computes median for 1st element and subsequent elements
+
+output = map(df, summary)
+```
+
+Map variant
+-----------
+
+``` r
+output = map_df(df, mean_and_sd)
+
+# This makes a dataframe of my output
+
+output = map_dbl(df, median)
+```
+
+Code syntax (45:50)
+-------------------
+
+Be clear about arguments
+
+``` r
+output = map(.x = df, ~mean(x = .x, na.rm = FALSE))
 ```
