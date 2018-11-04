@@ -1,0 +1,19 @@
+---
+title: "Writing_Functions.Rmd"
+author: "Briana Lettsome"
+date: "November 3, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(rvest)
+
+set.seed(1)
+```
+
+
+
+
